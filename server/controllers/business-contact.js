@@ -5,6 +5,7 @@ let mongoose = require('mongoose');
 // connect to our Business Contact model and sort by name
 let BusinessContact = require('../models/business-contact');
 
+// controller for displaying contact list
 module.exports.displayContactList = (req, res, next) => {
     BusinessContact.find((err, contactList) => {
         if(err)
@@ -18,10 +19,12 @@ module.exports.displayContactList = (req, res, next) => {
     }).sort({"name":1});
 }
 
+// controller for displaying Add contact page
 module.exports.displayAddPage = (req, res, next) => {
     res.render('business-contact/add', {title: 'Add New Contact', displayName: req.user ? req.user.displayName : ''});
 }
 
+// controller for processing post request of add page
 module.exports.processAddPage = (req, res, next) => {
     let newContact = BusinessContact({
         "name": req.body.name,
@@ -43,6 +46,7 @@ module.exports.processAddPage = (req, res, next) => {
     });
 }
 
+// controller for displaying Edit contact page
 module.exports.displayEditPage = (req, res, next) => {
     let id = req.params.id;
 
@@ -60,6 +64,7 @@ module.exports.displayEditPage = (req, res, next) => {
     });
 }
 
+// controller for processing post request of edit page
 module.exports.processEditPage = (req, res, next) => {
     let id = req.params.id
 
@@ -84,6 +89,7 @@ module.exports.processEditPage = (req, res, next) => {
     });
 }
 
+// controller for performing entry deletion
 module.exports.performDelete = (req, res, next) => {
     let id = req.params.id;
 
